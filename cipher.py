@@ -11,7 +11,7 @@ def S(input, i):
     return None
 
 def P(input):
-    tab = int_to_list(input)
+    input_tab = int_to_list(input)
 
     P=[ 8, 15, 22, 29, 36, 43, 50, 57,
         1, 16, 23, 30, 37, 44, 51, 58,
@@ -22,11 +22,10 @@ def P(input):
         6, 13, 20, 27, 34, 41, 56, 63,
         7, 14, 21, 28, 35, 42, 49, 64]
 
-    #TODO: podstawienie
+    output_tab = list(map(lambda x: input_tab[x - 1], P))
 
-    output = list_to_int(tab)
+    output = list_to_int(output_tab)
     return output
-
 
 def key_schedule(key):
 
