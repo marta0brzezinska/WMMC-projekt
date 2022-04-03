@@ -256,7 +256,7 @@ def key_schedule(key):
     subkeys = []
     blocks = int_to_blocks(key, 9, 8)
 
-    for block in blocks:
+    for block in blocks.reverse():
         subkeys.append(E_function(block))
 
     return subkeys
