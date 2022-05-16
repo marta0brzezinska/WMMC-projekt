@@ -1,10 +1,10 @@
 """"
-Implementacja szyfru blokowego zaprojektownego w ramach projektu z przedmiotu WMMC.
+Implementacja szyfru blokowego MBKK zaprojektownego w ramach projektu z przedmiotu WMMC.
 
 Marta Brzezińska
 Kinga Kawczyńska
 """
-from type_transformations import *
+from nasz_szyfr.type_transformations import *
 
 s_box = [
     [27, 157, 79, 88, 120, 130, 61, 102, 165, 77, 199, 95, 140, 216, 7, 138, 58, 178, 100, 57, 78, 39, 41, 255, 17, 126,
@@ -256,7 +256,9 @@ def key_schedule(key):
     subkeys = []
     blocks = int_to_blocks(key, 9, 8)
 
-    for block in blocks.reverse():
+    blocks.reverse()
+
+    for block in blocks:
         subkeys.append(E_function(block))
 
     return subkeys
@@ -271,17 +273,18 @@ def encrypt(plaintext, key):
     :return: int value representing ciphertext
     """
     result = plaintext
+    keys = key_schedule(key)
     if result.bit_length() > 64:
         raise ValueError('plaintext too large')
 
     for i in range(7):
-        result ^= key_schedule(key)[i]
+        result ^= keys[i]
         result = S_function(result, s_box)
         result = P_function(result, P)
 
-    result ^= key_schedule(key)[7]
+    result ^= keys[7]
     result = S_function(result, s_box)
-    result ^= key_schedule(key)[8]
+    result ^= keys[8]
 
     return result
 
@@ -295,15 +298,17 @@ def decrypt(ciphertext, key):
     :return: int value representing plaintext
     """
     result = ciphertext
+    keys = key_schedule(key)
+
     if result.bit_length() > 64:
         raise ValueError('ciphertext too large')
-    result ^= key_schedule(key)[8]
+    result ^= keys[8]
     result = S_function(result, inv_s_box)
-    result ^= key_schedule(key)[7]
+    result ^= keys[7]
 
     for i in range(7):
         result = P_function(result, inv_P)
         result = S_function(result, inv_s_box)
-        result ^= key_schedule(key)[6 - i]
+        result ^= keys[6 - i]
 
     return result
