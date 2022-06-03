@@ -10,8 +10,8 @@ rozw1 = ""
 tresc2 = ""
 rozw2 = ""
 
-tresc3 = ""
-rozw3 = ""
+tresc3 = "Czy kryptosystemy McEliece’a i Niederreiter’a są sobie równoważne? Udowodnij."
+rozw3 = "tak"
 
 tresc4 = ""
 rozw4 = ""
@@ -52,7 +52,7 @@ def zadania():
     while odp4 != rozw4:
         print("Niepoprawne rozwiązanie, spróbuj jeszcze raz!")
         odp4 = input()
-    print("Udało się! To już koniec.")
+    print("Gratulacje! To już koniec.")
 
 if __name__ == '__main__':
     zadania()
